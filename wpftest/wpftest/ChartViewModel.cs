@@ -4,6 +4,7 @@ using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace wpftest
 {
@@ -36,19 +37,19 @@ namespace wpftest
                 return x;
         }
 
-        internal void refresh()
+        internal void Refresh()
         {
             var mapper = Mappers.Xy<ObservablePoint>()
-             .X(point => XValue(point.X)) //a 10 base log scale in the X axis
-             .Y(point => point.Y);
+                .X(point => Math.Log(point.X, Base)) //a 10 base log scale in the X axis
+                .Y(point => point.Y);
 
             SeriesCollection = new SeriesCollection(mapper)
             {
-               new LineSeries
-               {
+                new LineSeries
+                {
                     Values = new ChartValues<ObservablePoint>
                     {
-                        new ObservablePoint(0, 0),
+                        //new ObservablePoint(0, 0),
                         new ObservablePoint(0.8, 50),
                         new ObservablePoint(1, 50),
                         new ObservablePoint(1.25, 49),
@@ -62,7 +63,7 @@ namespace wpftest
                         new ObservablePoint(6.0, 23),
                         new ObservablePoint(6.3, 22),
                         new ObservablePoint(7.13, 20),
-                        new ObservablePoint(8, 18),
+                        new ObservablePoint(8, 18), 
                         new ObservablePoint(10.0, 14.3),
                         new ObservablePoint(12.5, 11.5),
                         new ObservablePoint(16, 9),
@@ -78,15 +79,14 @@ namespace wpftest
                         new ObservablePoint(125, 2),
                         new ObservablePoint(160, 2),
                         new ObservablePoint(200, 2)
-                    },
-                },
+                    }
+                }
             };
 
             Formatter = value => Math.Pow(Base, value).ToString("N");
             //Formatter = value => labelPoint(value);
         }
 
-        public double Base { get; set; }
         public double Frequency { get; set; }
         public double A_zone { get; set; }
         public double B_zone { get; set; }
@@ -95,22 +95,36 @@ namespace wpftest
         public double E1_zone { get; set; }
         public double E2_zone { get; set; }
         public double F_zone { get; set; }
-        public Func<double, string> Formatter { get; set; }
 
         private SeriesCollection seriesCollection;
 
         public SeriesCollection SeriesCollection
         {
             get { return seriesCollection; }
-            set { seriesCollection = value; NotifyPropertyChanged("SeriesCollection"); }
+            set { seriesCollection = value; OnPropertyChanged("SeriesCollection"); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+        private Func<double, string> formatter;
 
-        protected void NotifyPropertyChanged(
-            string propertyName)
+        public Func<double, string> Formatter
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            get { return formatter; }
+            set { formatter = value; OnPropertyChanged("Formatter"); }
+        }
+
+        private double _base;
+
+        public double Base
+        {
+            get { return _base; }
+            set { _base = value; OnPropertyChanged("Base"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Windows;
-using LiveCharts;
-using LiveCharts.Wpf;
-using LiveCharts.Configurations;
-using LiveCharts.Defaults;
+﻿using System.Windows;
 
 namespace wpftest
 {
@@ -19,7 +13,7 @@ namespace wpftest
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ((ChartViewModel)Chart.DataContext).refresh();
+            ((ChartViewModel)Chart.DataContext).Refresh();
         }
     }
 }
