@@ -15,8 +15,6 @@ namespace wpftest
             InitializeComponent();
 
             Chart.DataContext = new ChartViewModel();
-
-
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

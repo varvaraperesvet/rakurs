@@ -4,43 +4,58 @@ using LiveCharts.Wpf;
 using LiveCharts.Configurations;
 using LiveCharts.Defaults;
 using System.ComponentModel;
-using System.Timers;
 
 namespace wpftest
 {
     public class ChartViewModel : INotifyPropertyChanged
     {
-        private Timer timer;
-
         public ChartViewModel()
         {
             Base = 10;
-            Formatter = value => Math.Pow(Base, value).ToString("N");
         }
 
+        private string labelPoint(double point)
+        {
+            if (point >= 1)
+                return Math.Pow(Base, point).ToString("N1");
+            else if (point <= -1)
+                return (-Math.Pow(Base, -point)).ToString("N1");
+            else // point = (-1; 1)
+                return point.ToString("N1");
+        }
 
-        public double Base { get; set; }
-        public double Frequency { get; set; }
+        private double XValue(double x)
+        {
+            if (x > 1)
+                return Math.Log(x, Base);
+            else if (x < -1)
+            {
+                return -Math.Log(-x, Base);
+            }
+            else // x = (-1; 1)
+                return x;
+        }
 
         internal void refresh()
         {
             var mapper = Mappers.Xy<ObservablePoint>()
-             .X(point => Math.Log(point.X, Base)) //a 10 base log scale in the X axis
-             .Y(point => Math.Log(point.Y, Base)); //a 10 base log scale in the Y axis
+             .X(point => XValue(point.X)) //a 10 base log scale in the X axis
+             .Y(point => point.Y);
+
             SeriesCollection = new SeriesCollection(mapper)
             {
-               new StackedAreaSeries
+               new LineSeries
                {
-                    Title = "A",
                     Values = new ChartValues<ObservablePoint>
                     {
+                        new ObservablePoint(0, 0),
                         new ObservablePoint(0.8, 50),
                         new ObservablePoint(1, 50),
                         new ObservablePoint(1.25, 49),
                         new ObservablePoint(1.6, 47),
                         new ObservablePoint(2, 44.5),
                         new ObservablePoint(2.5, 41),
-                        new ObservablePoint(3.0, 0), //38),
+                        new ObservablePoint(3.0, 38),
                         new ObservablePoint(3.15, 36.7),
                         new ObservablePoint(4.0, 31.5),
                         new ObservablePoint(5.0, 26.5),
@@ -64,11 +79,15 @@ namespace wpftest
                         new ObservablePoint(160, 2),
                         new ObservablePoint(200, 2)
                     },
-                    LineSmoothness = 0
                 },
             };
+
+            Formatter = value => Math.Pow(Base, value).ToString("N");
+            //Formatter = value => labelPoint(value);
         }
 
+        public double Base { get; set; }
+        public double Frequency { get; set; }
         public double A_zone { get; set; }
         public double B_zone { get; set; }
         public double C_zone { get; set; }
