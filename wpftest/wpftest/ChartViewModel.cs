@@ -15,32 +15,10 @@ namespace wpftest
             Base = 10;
         }
 
-        private string labelPoint(double point)
-        {
-            if (point >= 1)
-                return Math.Pow(Base, point).ToString("N1");
-            else if (point <= -1)
-                return (-Math.Pow(Base, -point)).ToString("N1");
-            else // point = (-1; 1)
-                return point.ToString("N1");
-        }
-
-        private double XValue(double x)
-        {
-            if (x > 1)
-                return Math.Log(x, Base);
-            else if (x < -1)
-            {
-                return -Math.Log(-x, Base);
-            }
-            else // x = (-1; 1)
-                return x;
-        }
-
         internal void Refresh()
         {
             var mapper = Mappers.Xy<ObservablePoint>()
-                .X(point => Math.Log(point.X, Base)) //a 10 base log scale in the X axis
+                .X(point => point.X == 0 ? -2 : Math.Log10(point.X))
                 .Y(point => point.Y);
 
             SeriesCollection = new SeriesCollection(mapper)
@@ -49,8 +27,16 @@ namespace wpftest
                 {
                     Values = new ChartValues<ObservablePoint>
                     {
-                        //new ObservablePoint(0, 0),
-                        new ObservablePoint(0.8, 50),
+                        new ObservablePoint(0, 60),
+                        new ObservablePoint(0.1, 58),
+                        new ObservablePoint(0.2, 57),
+                        new ObservablePoint(0.3, 56),
+                        new ObservablePoint(0.4, 55),
+                        new ObservablePoint(0.5, 54),
+                        new ObservablePoint(0.6, 53),
+                        new ObservablePoint(0.7, 52),
+                        new ObservablePoint(0.8, 51),
+                        new ObservablePoint(0.9, 50.5),
                         new ObservablePoint(1, 50),
                         new ObservablePoint(1.25, 49),
                         new ObservablePoint(1.6, 47),
@@ -63,7 +49,7 @@ namespace wpftest
                         new ObservablePoint(6.0, 23),
                         new ObservablePoint(6.3, 22),
                         new ObservablePoint(7.13, 20),
-                        new ObservablePoint(8, 18), 
+                        new ObservablePoint(8, 18),
                         new ObservablePoint(10.0, 14.3),
                         new ObservablePoint(12.5, 11.5),
                         new ObservablePoint(16, 9),
@@ -83,8 +69,7 @@ namespace wpftest
                 }
             };
 
-            Formatter = value => Math.Pow(Base, value).ToString("N");
-            //Formatter = value => labelPoint(value);
+            Formatter = value => value == -2 ? "0" : Math.Pow(Base, value).ToString("N");
         }
 
         public double Frequency { get; set; }
@@ -97,6 +82,8 @@ namespace wpftest
         public double F_zone { get; set; }
 
         private SeriesCollection seriesCollection;
+        private Func<double, string> formatter;
+        private double m_base;
 
         public SeriesCollection SeriesCollection
         {
@@ -104,20 +91,16 @@ namespace wpftest
             set { seriesCollection = value; OnPropertyChanged("SeriesCollection"); }
         }
 
-        private Func<double, string> formatter;
-
         public Func<double, string> Formatter
         {
             get { return formatter; }
             set { formatter = value; OnPropertyChanged("Formatter"); }
         }
 
-        private double _base;
-
         public double Base
         {
-            get { return _base; }
-            set { _base = value; OnPropertyChanged("Base"); }
+            get { return m_base; }
+            set { m_base = value; OnPropertyChanged("Base"); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
