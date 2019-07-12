@@ -6,20 +6,43 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+ 
     <Grid>
-        <lvc:CartesianChart x:Name="Chart" DisableAnimations="True" Series="{Binding SeriesCollection}">
+        <lvc:CartesianChart x:Name="Chart" DisableAnimations="True" Series="{Binding SeriesCollection}" Background="#222E31">
             <lvc:CartesianChart.Resources>
                 <Style TargetType="lvc:Separator">
                     <Setter Property="Stroke" Value="LightGray"></Setter>
                 </Style>
             </lvc:CartesianChart.Resources>
             <lvc:CartesianChart.AxisX>
-                <lvc:LogarithmicAxis LabelFormatter="{Binding Formatter}" Base="{Binding Base}" >
-                    <lvc:LogarithmicAxis.Separator>
+                <lvc:Axis LabelFormatter="{Binding Formatter}">
+                    <lvc:Axis.Separator>
                         <lvc:Separator StrokeThickness="1" IsEnabled="True"></lvc:Separator>
-                    </lvc:LogarithmicAxis.Separator>
-                </lvc:LogarithmicAxis>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.Style>
+                <Style TargetType="lvc:CartesianChart">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Logarithmic}" Value="True">
+                            <DataTrigger.Setters>
+                                <Setter Property="AxisX">
+                                    <Setter.Value>
+                                        <lvc:AxesCollection>
+                                            <lvc:LogarithmicAxis LabelFormatter="{Binding Formatter}" Base="{Binding Base}" >
+                                                <lvc:LogarithmicAxis.Separator>
+                                                    <lvc:Separator StrokeThickness="1" IsEnabled="True"></lvc:Separator>
+                                                </lvc:LogarithmicAxis.Separator>
+                                            </lvc:LogarithmicAxis>
+                                        </lvc:AxesCollection>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </lvc:CartesianChart.Style>
+           
         </lvc:CartesianChart>
         <Button Grid.ColumnSpan="2" Content="Button" HorizontalAlignment="Left" Margin="694,186,0,0" VerticalAlignment="Top" Width="50" Click="Button_Click"/>
     </Grid>

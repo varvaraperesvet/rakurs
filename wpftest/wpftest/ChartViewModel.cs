@@ -13,12 +13,33 @@ namespace wpftest
         public ChartViewModel()
         {
             Base = 10;
+            logarithmic = true;
+        }
+
+        private double XValue(double x)
+        {
+            if (x > 0 && logarithmic)
+                return Math.Log10(x);
+            else if (x <= 0 && logarithmic)
+            {
+                logarithmic = false;
+                return x;
+            }
+            else if (x > 0 && !logarithmic)
+            {
+                logarithmic = true;
+                return Math.Log10(x);
+            }
+            else // x <= 0 && !logarithmic
+                return x;
         }
 
         internal void Refresh()
         {
+
+            
             var mapper = Mappers.Xy<ObservablePoint>()
-                .X(point => point.X == 0 ? -2 : Math.Log10(point.X))
+                .X(point => XValue(point.X))
                 .Y(point => point.Y);
 
             SeriesCollection = new SeriesCollection(mapper)
@@ -69,21 +90,22 @@ namespace wpftest
                 }
             };
 
-            Formatter = value => value == -2 ? "0" : Math.Pow(Base, value).ToString("N");
+            Formatter = value => labelFormat(value);
         }
 
-        public double Frequency { get; set; }
-        public double A_zone { get; set; }
-        public double B_zone { get; set; }
-        public double C_zone { get; set; }
-        public double D_zone { get; set; }
-        public double E1_zone { get; set; }
-        public double E2_zone { get; set; }
-        public double F_zone { get; set; }
+        private string labelFormat(double value)
+        {
+            if (logarithmic)
+                return Math.Pow(Base, value).ToString("N");
+            else
+                return value.ToString("N");
+        }
 
         private SeriesCollection seriesCollection;
         private Func<double, string> formatter;
         private double m_base;
+        private bool logarithmic;
+        private ChartValues<ObservablePoint> observablePoints;
 
         public SeriesCollection SeriesCollection
         {
@@ -103,11 +125,31 @@ namespace wpftest
             set { m_base = value; OnPropertyChanged("Base"); }
         }
 
+        public bool Logarithmic
+        {
+            get { return logarithmic; }
+            set { logarithmic = value; OnPropertyChanged("Logarithmic"); }
+        }
+
+        public ChartValues<ObservablePoint> ObservablePoints
+        {
+            get { }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
+
+        public double Frequency { get; set; }
+        public double A_zone { get; set; }
+        public double B_zone { get; set; }
+        public double C_zone { get; set; }
+        public double D_zone { get; set; }
+        public double E1_zone { get; set; }
+        public double E2_zone { get; set; }
+        public double F_zone { get; set; }
     }
 }
