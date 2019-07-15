@@ -26,13 +26,26 @@ namespace ZoneMarkers
                     Values = new ChartValues<ObservablePoint>
                     {
                         new ObservablePoint(0.1, 2),
-                        new ObservablePoint(0.3, 0.9),
-                        new ObservablePoint(0.5, 0.8),
-                        new ObservablePoint(7, 0.7)
+                        new ObservablePoint(7, 1),
+                        new ObservablePoint(8, 0.5),
+                        new ObservablePoint(11, 17)
                     },
                     LineSmoothness = 0
-                }
+                },
+                 new LineSeries
+                {
+                    Values = new ChartValues<ObservablePoint>
+                    {
+                        new ObservablePoint(0.1, 5),
+                        new ObservablePoint(7, 9),
+                        new ObservablePoint(8, 12),
+                        new ObservablePoint(11, 20)
+                    },
+                    LineSmoothness = 0
+                },
             };
+
+
             DataContext = this;
 
             //Xvalue = 0.3;

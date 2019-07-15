@@ -15,8 +15,11 @@ namespace ZoneMarkers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            List<double> arrX = new List<double>();
-            List<double> arrY = new List<double>();
+            int i = 0;
+            double iks = 0;
+            double igrik = 0;
+            List <double> arrX = new List<double>();
+            List <double> arrY = new List<double>();
 
             SeriesCollection series = (SeriesCollection)value;
             if (series != null)
@@ -36,12 +39,33 @@ namespace ZoneMarkers
 
                     }
                 }
-                double distX = arrX.Max()-arrX.Min();
-                Console.WriteLine(distX);
-                throw new NotImplementedException();
+
+
+                double distrikt = arrX.Max()-arrX.Min(); // задаём местоположение надписи по Х
+                iks = distrikt * 0.25;
+
+                i = 0;
+                while (iks> arrX[i]) // борщ соответствующий igrik
+                {
+                    if (iks < arrX[i+1])
+                    {
+                        if ((iks - arrX[i]) > (arrX[i + 1]-iks))
+                            igrik = arrY[i + 1] * 0.5;
+                        else
+                        {
+                            igrik = arrY[i] * 0.5;
+                        }
+
+                        break;
+                    }
+                    i = i + 1;
+                }
+
+
+                return new VisualElementsCollection() { new VisualElement() { X = iks, Y = igrik, UIElement = new TextBlock() { Text = "A" } } };
             }
             else
-                return new VisualElementsCollection() { new VisualElement() { X = 1, Y = 2, UIElement = new TextBlock() { Text = "ффух" } } };
+                return new VisualElementsCollection() { new VisualElement() { X = iks, Y = igrik, UIElement = new TextBlock() { Text = "ффух" } } };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
