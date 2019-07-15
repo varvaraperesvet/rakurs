@@ -29,38 +29,36 @@ namespace ZoneMarkers
                         new ObservablePoint(0.3, 0.9),
                         new ObservablePoint(0.5, 0.8),
                         new ObservablePoint(7, 0.7)
-
                     },
                     LineSmoothness = 0
                 }
             };
             DataContext = this;
 
-            Xvalue = 0.3;
-            Yvalue = 0.9;
+            //Xvalue = 0.3;
+            //Yvalue = 0.9;
 
-            
         }
 
         private SeriesCollection seriesCollection;
-        private double xvalue;
-        private double yvalue;
+        //private double xvalue;
+        //private double yvalue;
 
         public SeriesCollection SeriesCollection
         {
             get { return seriesCollection; }
             set { seriesCollection = value; OnPropertyChanged("SeriesCollection"); }
         }
-        public double Xvalue
-        {
-            get { return xvalue; }
-            set { xvalue = value; OnPropertyChanged("Xvalue"); }
-        }
-        public double Yvalue
-        {
-            get { return yvalue; }
-            set { yvalue = value; OnPropertyChanged("Yvalue"); }
-        }
+        //public double Xvalue
+        //{
+        //    get { return xvalue; }
+        //    set { xvalue = value; OnPropertyChanged("Xvalue"); }
+        //}
+        //public double Yvalue
+        //{
+        //    get { return yvalue; }
+        //    set { yvalue = value; OnPropertyChanged("Yvalue"); }
+        //}
 
         private bool elements;
         public bool Elements

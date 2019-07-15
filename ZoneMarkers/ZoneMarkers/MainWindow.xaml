@@ -7,11 +7,8 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Window.Resources>
-        
-    </Window.Resources>
     <Grid>
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" VisualElements="{Binding Elements, Converter={StaticResource testConverter}}">
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" VisualElements="{Binding SeriesCollection, Converter={StaticResource testConverter}}">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis MinValue="-5" />
             </lvc:CartesianChart.AxisY>
@@ -27,6 +24,6 @@
                 </lvc:VisualElement>
             </lvc:CartesianChart.VisualElements>-->
         </lvc:CartesianChart>
-        <TextBlock Text="{Binding Xvalue, FallbackValue='FALLBACK'}"/>
+        <!--<TextBlock Text="{Binding Xvalue, FallbackValue='FALLBACK'}"/>-->
     </Grid>
 </Window>
