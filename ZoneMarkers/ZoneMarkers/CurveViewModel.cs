@@ -20,6 +20,7 @@ namespace ZoneMarkers
 
         public CurveViewModel()
         {
+            Base = 10;
             Curves = new Curve[]
             {
                 new Curve
@@ -155,9 +156,7 @@ namespace ZoneMarkers
                     dU = "E2",
                 },
             };
-
-            Formatter = value => Math.Pow(Base, value).ToString("D");
-
+            Formatter = value => Math.Pow(Base, value).ToString();
         }
 
 

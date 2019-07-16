@@ -24,13 +24,13 @@ namespace ZoneMarkers
                     {
                         if (curve != null)
                         {
-                            double placeX = 0.25 * line.Points.Max(p => p.X);
+                            double placeX = 0.05*Math.Log(line.Points.Max(p => p.X));
                             double distY = line.Points.First(p => p.X > placeX).Y;
-                            double placeY = distY * Math.Log(7, 10);
+                            double placeY = Math.Log(distY*0.7,10);
                             if (prevLine != null)
                             {
                                 double prevdistY = prevLine.Points.OrderBy(p => p.X - placeX).First().Y;
-                                placeY = (distY - prevdistY) * Math.Log(7, 10) + prevdistY;
+                                placeY =0.9*(Math.Log(distY/prevdistY, 10)) + Math.Log(prevdistY, 10);
                              }
                             result.Add(new VisualElement() { X = placeX, Y = placeY, UIElement = new TextBlock() { Text = curve.dU,
                                 FontWeight = FontWeights.Bold, FontSize = 15, VerticalAlignment = VerticalAlignment.Top} });

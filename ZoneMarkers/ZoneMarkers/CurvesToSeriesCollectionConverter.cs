@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Windows.Data;
 using LiveCharts.Defaults;
 using LiveCharts.Configurations;
+using System.Windows.Media;
 
 namespace ZoneMarkers
 {
@@ -12,6 +13,7 @@ namespace ZoneMarkers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            int i= 0;
             if (value is CurveViewModel cur)
             {
                 var mapper = Mappers.Xy<ObservablePoint>()
@@ -23,14 +25,40 @@ namespace ZoneMarkers
                     SeriesCollection result = new SeriesCollection(mapper);
                     foreach (var curve in cur.Curves)
                     {
+                        i= i + 1;
                         Curve line = curve;
                         {
+                            
                             if (curve != null)
                             {
                                 var L = new LineSeries
                                 {
-                                    Values = new ChartValues<ObservablePoint>()
+                                    Values = new ChartValues<ObservablePoint>(),
+                                    PointGeometry=null,
                                 };
+                                switch (i)
+                                {
+                                    case 1:
+                                        L.Stroke= Brushes.Brown;
+                                        break;
+                                    case 2:
+                                        L.Stroke = Brushes.Black;
+                                        break;
+                                    case 3:
+                                        L.Stroke = Brushes.Blue;
+                                        break;
+                                    case 4:
+                                        L.Stroke = Brushes.DodgerBlue;
+                                        break;
+                                    case 5:
+                                        L.Stroke = Brushes.Orange;
+                                        break;
+                                    default:
+                                        L.Stroke = Brushes.Red;
+                                        break;
+                                }
+
+
                                 foreach (var p in line.Points)
                                 {
                                     L.Values.Add(new ObservablePoint(p.X, p.Y));
