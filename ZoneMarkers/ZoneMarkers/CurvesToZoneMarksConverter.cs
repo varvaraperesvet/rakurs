@@ -13,26 +13,27 @@ namespace ZoneMarkers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            SeriesCollection series = (SeriesCollection)value;
-            if (series != null)
+            Curve[] curves = (Curve[])value;
+            if (curves != null)
             {
                 VisualElementsCollection result = new VisualElementsCollection();
-                LineSeries prevLine = null;
-                foreach (var serie in series)
+                Curve prevLine = null;
+                foreach (var curve in curves)
                 {
-                    LineSeries line = (LineSeries)serie;
+                    Curve line = curve;
                     {
-                        if (series != null)
+                        if (curve != null)
                         {
-                            double iks = 0.25 * line.ChartPoints.Max(p => p.X);
-                            ChartPoint игрик = line.ChartPoints.First(p => p.X > iks);
-                            double gaga = игрик.Y* Math.Log(7, 10);
+                            double placeX = 0.25 * line.Points.Max(p => p.X);
+                            double distY = line.Points.First(p => p.X > placeX).Y;
+                            double placeY = distY * Math.Log(7, 10);
                             if (prevLine != null)
                             {
-                                ChartPoint irgikOLD = prevLine.ChartPoints.OrderBy(p => p.X - iks).First();
-                                gaga = (игрик.Y - irgikOLD.Y)* Math.Log(7, 10) + irgikOLD.Y;
+                                double prevdistY = prevLine.Points.OrderBy(p => p.X - placeX).First().Y;
+                                placeY = (distY - prevdistY) * Math.Log(7, 10) + prevdistY;
                              }
-                            result.Add(new VisualElement() { X = iks, Y = gaga, UIElement = new TextBlock() { Text = serie.Title, FontWeight = FontWeights.Bold, FontSize = 15, VerticalAlignment = VerticalAlignment.Top} });
+                            result.Add(new VisualElement() { X = placeX, Y = placeY, UIElement = new TextBlock() { Text = curve.dU,
+                                FontWeight = FontWeights.Bold, FontSize = 15, VerticalAlignment = VerticalAlignment.Top} });
                         }
                     }
                     prevLine = line;

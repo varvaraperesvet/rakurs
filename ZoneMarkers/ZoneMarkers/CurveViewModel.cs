@@ -156,7 +156,7 @@ namespace ZoneMarkers
                 },
             };
 
-            Formatter = value => Math.Pow(Base, value).ToString("N");
+            Formatter = value => Math.Pow(Base, value).ToString("D");
 
         }
 
