@@ -9,7 +9,7 @@ using System.Windows.Data;
 
 namespace ZoneMarkers
 {
-    public class testConverter : IValueConverter
+    public class CurvesToZoneMarksConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -26,13 +26,13 @@ namespace ZoneMarkers
                         {
                             double iks = 0.25 * line.ChartPoints.Max(p => p.X);
                             ChartPoint игрик = line.ChartPoints.First(p => p.X > iks);
-                            double gaga = игрик.Y* Math.Log(100, 10);
+                            double gaga = игрик.Y* Math.Log(7, 10);
                             if (prevLine != null)
                             {
                                 ChartPoint irgikOLD = prevLine.ChartPoints.OrderBy(p => p.X - iks).First();
-                                gaga = (игрик.Y - irgikOLD.Y)*0.9+irgikOLD.Y;
+                                gaga = (игрик.Y - irgikOLD.Y)* Math.Log(7, 10) + irgikOLD.Y;
                              }
-                            result.Add(new VisualElement() { X = iks, Y = gaga, UIElement = new TextBlock() { Text = serie.Title, FontWeight = FontWeights.Bold, FontSize = 15}});
+                            result.Add(new VisualElement() { X = iks, Y = gaga, UIElement = new TextBlock() { Text = serie.Title, FontWeight = FontWeights.Bold, FontSize = 15, VerticalAlignment = VerticalAlignment.Top} });
                         }
                     }
                     prevLine = line;

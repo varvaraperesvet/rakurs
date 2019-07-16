@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:ZoneMarkers"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:testConverter x:Key="testConverter"/>
+        <local:CurvesToZoneMarksConverter x:Key="curvesToZoneMarksConverter"/>
     </Application.Resources>
 </Application>

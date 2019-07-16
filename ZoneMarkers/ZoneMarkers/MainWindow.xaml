@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:ZoneMarkers"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="500" Width="500">
     <Grid>
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" 
-                            VisualElements="{Binding SeriesCollection, Converter={StaticResource testConverter}}">
+        <lvc:CartesianChart Series="{Binding Curves, Converter={StaticResource curvesToSeriesCollectionConverter}}" 
+                            VisualElements="{Binding Curves, Converter={StaticResource curvesToZoneMarksConverter}}">
             <lvc:CartesianChart.Resources>
                 <Style TargetType="lvc:Separator">
                     <Setter Property="Stroke" Value="LightGray"></Setter>
@@ -17,7 +17,7 @@
             </lvc:CartesianChart.Resources>
             <lvc:CartesianChart.AxisX>
                 <lvc:LogarithmicAxis LabelFormatter="{Binding Formatter}" 
-                                     Base="{Binding Base}" MinValue="0" MaxValue="3">
+                                     Base="{Binding Base}" MinValue="0">
                     <lvc:LogarithmicAxis.Separator>
                         <lvc:Separator StrokeThickness="1" IsEnabled="True"></lvc:Separator>
                     </lvc:LogarithmicAxis.Separator>

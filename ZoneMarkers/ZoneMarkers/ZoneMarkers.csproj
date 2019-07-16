@@ -67,8 +67,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ChartVM.cs" />
-    <Compile Include="testConverter.cs" />
+    <Compile Include="Curve.cs" />
+    <Compile Include="CurveViewModel.cs" />
+    <Compile Include="CurvesToZoneMarksConverter.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
