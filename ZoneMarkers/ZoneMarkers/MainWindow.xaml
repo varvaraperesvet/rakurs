@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="500">
     <Grid>
-        <lvc:CartesianChart Series="{Binding Curves, Converter={StaticResource curvesToSeriesCollectionConverter}}" 
+        <lvc:CartesianChart Series="{Binding Path=., Converter={StaticResource curvesToSeriesCollectionConverter}}" 
                             VisualElements="{Binding Curves, Converter={StaticResource curvesToZoneMarksConverter}}">
             <lvc:CartesianChart.Resources>
                 <Style TargetType="lvc:Separator">

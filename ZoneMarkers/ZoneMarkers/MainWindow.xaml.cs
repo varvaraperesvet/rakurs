@@ -20,13 +20,6 @@ namespace ZoneMarkers
         public MainWindow()
         {
             InitializeComponent();
-            Base = 10;
-
-            // создается в конвертере, когда готовим SeriesCollection
-            var mapper = Mappers.Xy<ObservablePoint>()
-                .X(point => Math.Log(point.X, Base)) //a 10 base log scale in the X axis
-                .Y(point => Math.Log(point.Y, Base));
-
             DataContext = new CurveViewModel();
         }
 

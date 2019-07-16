@@ -68,6 +68,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Curve.cs" />
+    <Compile Include="CurvesToSeriesCollectionConverter.cs" />
     <Compile Include="CurveViewModel.cs" />
     <Compile Include="CurvesToZoneMarksConverter.cs" />
     <Page Include="MainWindow.xaml">
