@@ -26,7 +26,7 @@ namespace ZoneMarkers
                         {
                             double iks = 0.25 * line.ChartPoints.Max(p => p.X);
                             ChartPoint игрик = line.ChartPoints.First(p => p.X > iks);
-                            double gaga = игрик.Y*0.5;
+                            double gaga = игрик.Y* Math.Log(100, 10);
                             if (prevLine != null)
                             {
                                 ChartPoint irgikOLD = prevLine.ChartPoints.OrderBy(p => p.X - iks).First();

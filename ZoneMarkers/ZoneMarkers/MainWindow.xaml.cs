@@ -8,6 +8,7 @@ using LiveCharts.Wpf;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Media;
+using LiveCharts.Configurations;
 
 namespace ZoneMarkers
 {
@@ -19,8 +20,13 @@ namespace ZoneMarkers
         public MainWindow()
         {
             InitializeComponent();
+            Base = 10;
 
-            SeriesCollection = new SeriesCollection
+            var mapper = Mappers.Xy<ObservablePoint>()
+                .X(point => Math.Log(point.X, Base)) //a 10 base log scale in the X axis
+                .Y(point => Math.Log(point.Y, Base));
+
+            SeriesCollection = new SeriesCollection(mapper)
             {
                 new LineSeries
                 {
@@ -159,37 +165,25 @@ namespace ZoneMarkers
                     },
                     LineSmoothness = 0,
                     Title = "E2",
-                    Foreground=Brushes.Green
                 },
   
             };
 
-            DataContext = this;
+            Formatter = value => Math.Pow(Base, value).ToString("N");
 
-            //Xvalue = 0.3;
-            //Yvalue = 0.9;
+            DataContext = this;
 
         }
 
         private SeriesCollection seriesCollection;
-        //private double xvalue;
-        //private double yvalue;
-
         public SeriesCollection SeriesCollection
         {
             get { return seriesCollection; }
             set { seriesCollection = value; OnPropertyChanged("SeriesCollection"); }
         }
-        //public double Xvalue
-        //{
-        //    get { return xvalue; }
-        //    set { xvalue = value; OnPropertyChanged("Xvalue"); }
-        //}
-        //public double Yvalue
-        //{
-        //    get { return yvalue; }
-        //    set { yvalue = value; OnPropertyChanged("Yvalue"); }
-        //}
+
+        public Func<double, string> Formatter { get; set; }
+        public double Base { get; set; }
 
         private bool elements;
         public bool Elements

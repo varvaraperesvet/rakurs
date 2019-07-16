@@ -8,23 +8,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <lvc:CartesianChart Series="{Binding SeriesCollection}" VisualElements="{Binding SeriesCollection, Converter={StaticResource testConverter}}">
-
-            <!--<lvc:CartesianChart.AxisY>
-                <lvc:Axis MinValue="-5" />
-            </lvc:CartesianChart.AxisY>
+        <lvc:CartesianChart Series="{Binding SeriesCollection}" 
+                            VisualElements="{Binding SeriesCollection, Converter={StaticResource testConverter}}">
+            <lvc:CartesianChart.Resources>
+                <Style TargetType="lvc:Separator">
+                    <Setter Property="Stroke" Value="LightGray"></Setter>
+                </Style>
+            </lvc:CartesianChart.Resources>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis MinValue="-0.5" />
-            </lvc:CartesianChart.AxisX>-->
-            
-            <!--<lvc:CartesianChart.VisualElements>
-                <lvc:VisualElement lvc:VisualElement.X="0.3" 
-                                   lvc:VisualElement.Y="{Binding Yvalue, Mode=OneTime}" AxisX="0" AxisY="0">
-                    <lvc:VisualElement.UIElement >
-                        <TextBlock Foreground="Black" FontSize="20">A</TextBlock>
-                    </lvc:VisualElement.UIElement>
-                </lvc:VisualElement>
-            </lvc:CartesianChart.VisualElements>-->
+                <lvc:LogarithmicAxis LabelFormatter="{Binding Formatter}" 
+                                     Base="{Binding Base}" MinValue="0" MaxValue="3">
+                    <lvc:LogarithmicAxis.Separator>
+                        <lvc:Separator StrokeThickness="1" IsEnabled="True"></lvc:Separator>
+                    </lvc:LogarithmicAxis.Separator>
+                </lvc:LogarithmicAxis>
+            </lvc:CartesianChart.AxisX>
+            <lvc:CartesianChart.AxisY>
+                <lvc:LogarithmicAxis LabelFormatter="{Binding Formatter}" 
+                                     Base="{Binding Base}" MinValue="0" MaxValue="3">
+                    <lvc:LogarithmicAxis.Separator>
+                        <lvc:Separator StrokeThickness="1" IsEnabled="True"></lvc:Separator>
+                    </lvc:LogarithmicAxis.Separator>
+                </lvc:LogarithmicAxis>
+            </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
         <!--<TextBlock Text="{Binding Xvalue, FallbackValue='FALLBACK'}"/>-->
     </Grid>
