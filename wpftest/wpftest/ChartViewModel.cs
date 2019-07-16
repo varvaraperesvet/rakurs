@@ -131,10 +131,7 @@ namespace wpftest
             set { logarithmic = value; OnPropertyChanged("Logarithmic"); }
         }
 
-        public ChartValues<ObservablePoint> ObservablePoints
-        {
-            get { }
-        }
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
