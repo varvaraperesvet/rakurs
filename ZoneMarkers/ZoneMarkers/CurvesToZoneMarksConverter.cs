@@ -13,6 +13,8 @@ namespace ZoneMarkers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            int contr = 0;
+            double x2 =0;
             Curve[] curves = (Curve[])value;
             if (curves != null)
             {
@@ -24,7 +26,7 @@ namespace ZoneMarkers
                     {
                         if (curve != null)
                         {
-                            double placeX = 0.05*Math.Log(line.Points.Max(p => p.X));
+                            double placeX = x2= 0.05*Math.Log(line.Points.Max(p => p.X));
                             double distY = line.Points.First(p => p.X > placeX).Y;
                             double placeY = Math.Log(distY*0.7,10);
                             if (prevLine != null)
@@ -37,7 +39,20 @@ namespace ZoneMarkers
                         }
                     }
                     prevLine = line;
+                    contr = 1;
                 }
+                if (contr == 1) result.Add(new VisualElement()
+                {
+                    X = x2,
+                    Y = 2.903,
+                    UIElement = new TextBlock()
+                    {
+                        Text = "F",
+                        FontWeight = FontWeights.Bold,
+                        FontSize = 15,
+                        VerticalAlignment = VerticalAlignment.Top
+                    }
+                });
                 return result;
             }
             else

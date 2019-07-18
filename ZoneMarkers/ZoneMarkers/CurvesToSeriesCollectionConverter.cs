@@ -6,6 +6,7 @@ using System.Windows.Data;
 using LiveCharts.Defaults;
 using LiveCharts.Configurations;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace ZoneMarkers
 {
@@ -36,25 +37,36 @@ namespace ZoneMarkers
                                     Values = new ChartValues<ObservablePoint>(),
                                     PointGeometry=null,
                                 };
+                                Panel.SetZIndex(L, -i);
                                 switch (i)
                                 {
                                     case 1:
-                                        L.Stroke= Brushes.Brown;
+                                        L.Stroke= Brushes.Navy;
+                                        L.Fill = Brushes.Navy;
                                         break;
                                     case 2:
-                                        L.Stroke = Brushes.Black;
+                                        L.Stroke = Brushes.MediumBlue;
+                                        L.Fill = Brushes.MediumBlue;
                                         break;
                                     case 3:
                                         L.Stroke = Brushes.Blue;
+                                        L.Fill = Brushes.Blue;
                                         break;
                                     case 4:
                                         L.Stroke = Brushes.DodgerBlue;
+                                        L.Fill = Brushes.DodgerBlue;
                                         break;
                                     case 5:
                                         L.Stroke = Brushes.Orange;
+                                        L.Fill = Brushes.Orange;
+                                        break;
+                                    case 6:
+                                        L.Stroke = Brushes.Red;
+                                        L.Fill = Brushes.Red;
                                         break;
                                     default:
-                                        L.Stroke = Brushes.Red;
+                                        L.Stroke = Brushes.Yellow;
+                                        L.Fill = Brushes.Yellow;
                                         break;
                                 }
 
